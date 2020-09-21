@@ -38,7 +38,7 @@ class WiFi
 
         static Modes Mode;
 
-        WiFi () = default;
+        WiFi          () = default;
         virtual ~WiFi () = default;
 
         virtual void Reconnect (void) = 0;
@@ -76,7 +76,7 @@ class WiFi
             {
                 uint8_t Ssid     [SSID_LEN];
                 uint8_t Password [PASSWORD_LEN];
-            } Station = {{0}, {0}}, SoftAp = {{0}, {0}};
+            } Station = {{ZERO}, {ZERO}}, SoftAp = {{ZERO}, {ZERO}};
         } settings;
 
         virtual void startStation (void) = 0;
