@@ -103,12 +103,12 @@ class WiFi
         {
             if (v_event == EEvents::eStart)
             {
-                Mode.Started = true;
+                Mode.Started      = true;
                 Mode.StaConnected = false;
             }
             if (v_event == EEvents::eStop)
             {
-                Mode.Started = false;
+                Mode.Started      = false;
                 Mode.StaConnected = false;
             }
             if (v_event == EEvents::eDisconnected || v_event == EEvents::eDisabled || v_event == EEvents::eLostIp)
