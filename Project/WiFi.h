@@ -44,8 +44,8 @@ class WiFi
 
         WiFi () = default;
 
-        static constexpr bool  IsOnline  (void) { return WiFi::Mode.StaConnected; }
-        constexpr void         Reconnect (void) { derivedType.Reconnect (); }
+        static  bool  IsOnline  (void) { return WiFi::Mode.StaConnected; }
+        void          Reconnect (void) { derivedType.Reconnect (); }
 
     protected:
         enum class EEvents
@@ -82,8 +82,8 @@ class WiFi
             } Station = {{ZERO}, {ZERO}}, SoftAp = {{ZERO}, {ZERO}};
         } settings;
 
-        constexpr void startStation (void) { derivedType.startStation (); }
-        constexpr void switchMode   (EMode v_eMode)
+        void startStation (void) { derivedType.startStation (); }
+        void switchMode   (EMode v_eMode)
         {
             switch (v_eMode)
             {
@@ -99,7 +99,7 @@ class WiFi
             }
         }
 
-        static constexpr void onEvent (EEvents v_event)
+        static void onEvent (EEvents v_event)
         {
             if (v_event == EEvents::eStart)
             {
