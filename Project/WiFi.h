@@ -107,32 +107,33 @@ class WiFi
 
         static void onEvent (EEvents v_event)
         {
-            switch (v_event)
+            const uint16_t event = static_cast <uint16_t> (v_event);
+            switch (event)
             {
-                case EEvents::eStart:
+                case static_cast<uint16_t>(EEvents::eStart):
                 {
                     Mode.Started = true;
                     Mode.StaConnected = false;
                     break;
                 }
-                case EEvents::eStop:
+                case static_cast<uint16_t>(EEvents::eStop):
                 {
                     Mode.Started = false;
                     Mode.StaConnected = false;
                     break;
                 }
-                case EEvents::eDisconnected:
-                case EEvents::eDisabled:
-                case EEvents::eLostIp:
+                case static_cast<uint16_t>(EEvents::eDisconnected):
+                case static_cast<uint16_t>(EEvents::eDisabled):
+                case static_cast<uint16_t>(EEvents::eLostIp):
                 {
                     Mode.StaConnected = false;
                     break;
                 }
-                case EEvents::eConnected:
+                case static_cast<uint16_t>(EEvents::eConnected):
                 {
                     break;
                 }
-                case EEvents::eGotIp:
+                case static_cast<uint16_t>(EEvents::eGotIp):
                 {
                     Mode.StaConnected = true;
                     break;
