@@ -30,24 +30,9 @@ class WiFi
         enum class EMode
         {
             eStation,
-            eAp,
+            eApp,
         };
 
-        struct Modes
-        {
-            bool Started         = false;
-            bool StaConnected    = false;
-            bool SoftApConnected = false;
-        };
-
-        static inline Modes Mode;
-
-        WiFi () = default;
-
-        static  bool  IsOnline  (void) { return WiFi::Mode.StaConnected; }
-        void          Reconnect (void) { derivedType.Reconnect (); }
-
-    protected:
         enum class EEvents
         {
             eStart,
@@ -65,6 +50,21 @@ class WiFi
             eApDisabled
         };
 
+        struct Modes
+        {
+            bool Started         = false;
+            bool StaConnected    = false;
+            bool SoftApConnected = false;
+        };
+
+        static inline Modes Mode;
+
+        WiFi () = default;
+
+        static  bool  IsOnline  (void) { return WiFi::Mode.StaConnected; }
+        void          Reconnect (void) { derivedType.Reconnect (); }
+
+    protected:
         struct Config
         {
             struct NetworkParams
@@ -83,6 +83,7 @@ class WiFi
         } settings;
 
         void startStation (void) { derivedType.startStation (); }
+        void startApp     (void) { derivedType.startApp     (); }
         void switchMode   (EMode v_eMode)
         {
             switch (v_eMode)
@@ -90,6 +91,11 @@ class WiFi
                 case EMode::eStation:
                 {
                     startStation ();
+                    break;
+                }
+                case EMode::eApp:
+                {
+                    startApp ();
                     break;
                 }
                 default:
@@ -101,24 +107,36 @@ class WiFi
 
         static void onEvent (EEvents v_event)
         {
-            if (v_event == EEvents::eStart)
+            switch (v_event)
             {
-                Mode.Started      = true;
-                Mode.StaConnected = false;
-            }
-            if (v_event == EEvents::eStop)
-            {
-                Mode.Started      = false;
-                Mode.StaConnected = false;
-            }
-            if (v_event == EEvents::eDisconnected || v_event == EEvents::eDisabled || v_event == EEvents::eLostIp)
-            {
-                Mode.StaConnected = false;
-            }
-            else if (v_event == EEvents::eConnected) { }
-            else if (v_event == EEvents::eGotIp)
-            {
-                Mode.StaConnected = true;
+                case EEvents::eStart:
+                {
+                    Mode.Started = true;
+                    Mode.StaConnected = false;
+                    break;
+                }
+                case EEvents::eStop:
+                {
+                    Mode.Started = false;
+                    Mode.StaConnected = false;
+                    break;
+                }
+                case EEvents::eDisconnected:
+                case EEvents::eDisabled:
+                case EEvents::eLostIp:
+                {
+                    Mode.StaConnected = false;
+                    break;
+                }
+                case EEvents::eConnected:
+                {
+                    break;
+                }
+                case EEvents::eGotIp:
+                {
+                    Mode.StaConnected = true;
+                    break;
+                }
             }
         }
 
