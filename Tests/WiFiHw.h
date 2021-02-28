@@ -11,11 +11,11 @@
 /////////////////////////// CLASSES/STRUCTURES ////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-class WiFiMock final : public WiFi <WiFiMock>
+class WiFiHw final : public WiFi <WiFiHw>
 {
     public:
-        WiFiMock () = default;
-        ~WiFiMock () = default;
+         WiFiHw () = default;
+        ~WiFiHw () = default;
 
         MOCK_METHOD0 (Reconnect   , void (void));
         MOCK_METHOD0 (startStation, void (void));

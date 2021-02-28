@@ -3,9 +3,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "WiFi.h"
-#include "WiFiMock.hxx"
 #include "Utils.h"
-#include "LoggerMock.h"
+#include "WiFiHw.h"
+#include "LoggerHw.h"
 #include "gmock/gmock.h"
 #include "WiFiFixture.hxx"
 
@@ -17,76 +17,76 @@ TEST_F (WiFiFixture, VerifyThatYouHaveSwitchedToStationMode)
 {
     LOGW (MODULE, "VerifyThatYouHaveSwitchedToStationMode");
 
-    EXPECT_CALL (WiFiMock, startStation ()).Times (ONE);
-    EXPECT_CALL (WiFiMock, startApp     ()).Times (ZERO);
+    EXPECT_CALL (WiFiHw, startStation ()).Times (ONE);
+    EXPECT_CALL (WiFiHw, startApp     ()).Times (ZERO);
 
-    WiFiMock.SwitchMode (WiFi<class WiFiMock>::EMode::eStation);
+    WiFiHw.SwitchMode (WiFi<class WiFiHw>::EMode::eStation);
 }
 
 TEST_F (WiFiFixture, VerifyThatYouHaveSwitchedToAppMode)
 {
     LOGW (MODULE, "VerifyThatYouHaveSwitchedToAppMode");
 
-    EXPECT_CALL (WiFiMock, startStation ()).Times (ZERO);
-    EXPECT_CALL (WiFiMock, startApp     ()).Times (ONE);
+    EXPECT_CALL (WiFiHw, startStation ()).Times (ZERO);
+    EXPECT_CALL (WiFiHw, startApp     ()).Times (ONE);
 
-    WiFiMock.SwitchMode (WiFi<class WiFiMock>::EMode::eApp);
+    WiFiHw.SwitchMode (WiFi<class WiFiHw>::EMode::eApp);
 }
 
 TEST_F (WiFiFixture, VerifyThatEventStartWorked)
 {
     LOGW (MODULE, "VerifyThatEventStartWorked");
 
-    WiFiMock.OnEvent (WiFi<class WiFiMock>::EEvents::eStart);
+    WiFiHw.OnEvent (WiFi<class WiFiHw>::EEvents::eStart);
     
-    EXPECT_EQ (WiFiMock.IsOnline () , false);
-    EXPECT_EQ (WiFiMock.Mode.Started, true);
+    EXPECT_EQ (WiFiHw.IsOnline () , false);
+    EXPECT_EQ (WiFiHw.Mode.Started, true);
 }
 
 TEST_F (WiFiFixture, VerifyThatEventStopWorked)
 {
     LOGW (MODULE, "VerifyThatEventStopWorked");
 
-    WiFiMock.OnEvent (WiFi<class WiFiMock>::EEvents::eStop);
+    WiFiHw.OnEvent (WiFi<class WiFiHw>::EEvents::eStop);
 
-    EXPECT_EQ (WiFiMock.IsOnline () , false);
-    EXPECT_EQ (WiFiMock.Mode.Started, false);
+    EXPECT_EQ (WiFiHw.IsOnline () , false);
+    EXPECT_EQ (WiFiHw.Mode.Started, false);
 }
 
 TEST_F (WiFiFixture, VerifyThatEventGotIpWorked)
 {
     LOGW (MODULE, "VerifyThatEventGotIpWorked");
 
-    WiFiMock.OnEvent (WiFi<class WiFiMock>::EEvents::eGotIp);
+    WiFiHw.OnEvent (WiFi<class WiFiHw>::EEvents::eGotIp);
 
-    EXPECT_EQ (WiFiMock.IsOnline (), true);
+    EXPECT_EQ (WiFiHw.IsOnline (), true);
 }
 
 TEST_F (WiFiFixture, VerifyThatEventDisconnectedWorked)
 {
     LOGW (MODULE, "VerifyThatEventDisconnectedWorked");
 
-    WiFiMock.OnEvent (WiFi<class WiFiMock>::EEvents::eDisconnected);
+    WiFiHw.OnEvent (WiFi<class WiFiHw>::EEvents::eDisconnected);
 
-    EXPECT_EQ (WiFiMock.IsOnline (), false);
+    EXPECT_EQ (WiFiHw.IsOnline (), false);
 }
 
 TEST_F (WiFiFixture, VerifyThatEventDisabledWorked)
 {
     LOGW (MODULE, "VerifyThatEventDisabledWorked");
 
-    WiFiMock.OnEvent (WiFi<class WiFiMock>::EEvents::eDisabled);
+    WiFiHw.OnEvent (WiFi<class WiFiHw>::EEvents::eDisabled);
 
-    EXPECT_EQ (WiFiMock.IsOnline (), false);
+    EXPECT_EQ (WiFiHw.IsOnline (), false);
 }
 
 TEST_F (WiFiFixture, VerifyThatEventLostIpWorked)
 {
     LOGW (MODULE, "VerifyThatEventLostIpWorked");
 
-    WiFiMock.OnEvent (WiFi<class WiFiMock>::EEvents::eLostIp);
+    WiFiHw.OnEvent (WiFi<class WiFiHw>::EEvents::eLostIp);
 
-    EXPECT_EQ (WiFiMock.IsOnline (), false);
+    EXPECT_EQ (WiFiHw.IsOnline (), false);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// END OF FILE ///////////////////////////////////
