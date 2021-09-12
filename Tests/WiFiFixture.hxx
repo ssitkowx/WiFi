@@ -14,7 +14,7 @@ class WiFiFixture : public ::testing::Test
 {
     public:
         static constexpr char * MODULE = (char *)"WiFiFixture";
-        WiFiHw                  WiFiHw;
+        class WiFiHw            WiFiHw;
 
         WiFiFixture () = default;
         ~WiFiFixture () = default;
